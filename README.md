@@ -1,6 +1,3 @@
-Based on the available information, the repository `smart-ocr` by Yash Gadbail is designed to extract data from PDFs directly into JSON format. Below is a suggested `README.md` file for the repository:
-
-```markdown
 # Smart OCR
 
 Smart OCR is a tool designed to extract data from PDF files and convert it directly into JSON format. This facilitates easy data manipulation and integration into various applications.
@@ -61,8 +58,4 @@ This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE
 
 ## Acknowledgments
 
-Special thanks to the contributors and the open-source community for their invaluable resources and support.
-
-```
-
-**Note**: This `README.md` is based on the available information from the repository. For a more detailed and accurate `README.md`, it's advisable to include specific details about the project's functionality, dependencies, usage examples, and any other pertinent information that would assist users and contributors. 
+gemini
