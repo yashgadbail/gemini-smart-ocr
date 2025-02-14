@@ -1,12 +1,25 @@
 import os
+import datetime
 import google.generativeai as genai
+from dotenv import load_dotenv
 import json
 from time import sleep
 
-image_dir = "extracted_images"
-output_file = "extracted_images_info.json"
 
-API_KEY3 = "<API KEY HERE>"
+image_dir = "extracted_images"
+# output_file = "extracted_images_info.json"
+
+load_dotenv()  # Load variables from .env file
+API_KEY3 = os.getenv('GEMINI_API_KEY') #"<API KEY HERE>"
+
+def create_filename_with_datetime(prefix: str, extension: str) -> str:
+    current_datetime = datetime.datetime.now().strftime("%H%M%S_%d%m%Y")
+    filename = f"{prefix}_{current_datetime}.{extension}"
+    print("filename : ", filename)
+    return filename
+
+output_file = create_filename_with_datetime(prefix=r"./Extracted_Json/extracted_images_info", extension="json")
+
 def upload_to_gemini(file_path, mime_type=None):
     """Uploads a file to Gemini and returns the file object."""
     if not os.path.exists(file_path):
@@ -54,7 +67,7 @@ else:
 count = 0
 
 for image in image_files:
-    genai.configure(api_key=API_KEY3)
+    genai.configure(api_key=API_KEY3,transport='rest')
     sleep(4)
         
     file_path = os.path.join(image_dir, image)
@@ -67,23 +80,39 @@ for image in image_files:
 
     chat_session = model.start_chat(history=[{"role": "user", "parts": [uploaded_file]}])
 
+    # prompt = f"""Analyze the document and extract key details. Identify the type of document and structure the response in the following JSON format:
+
+    # {{
+    #   "document_type": "Invoice / Contract / License / ID / Other",
+    #   "metadata": {{
+    #     "full_name": "Extracted Name (if applicable)",
+    #     "date": "Extracted Date (if applicable)",
+    #     "document_number": "Extracted Document Number (if applicable)",
+    #     "issuer": "Issuing Authority or Organization (if available)"
+    #   }},
+    #   "content": {{
+    #     "summary": "Brief summary of the document",
+    #     "key_details": {{
+    #       "field_1": "Extracted Value",
+    #       "field_2": "Extracted Value",
+    #       "...": "..."
+    #     }}
+    #   }}
+    # }}
+
+    # If certain fields are not applicable, omit them rather than leaving them blank.
+    # Ensure the response is strictly in JSON format.
+    # """
+
     prompt = f"""Analyze the document and extract key details. Identify the type of document and structure the response in the following JSON format:
 
     {{
-      "document_type": "Invoice / Contract / License / ID / Other",
+      "document_type": "Invoice / Contract / Letter / ID / OR Other",
       "metadata": {{
-        "full_name": "Extracted Name (if applicable)",
-        "date": "Extracted Date (if applicable)",
-        "document_number": "Extracted Document Number (if applicable)",
-        "issuer": "Issuing Authority or Organization (if available)"
+
       }},
       "content": {{
-        "summary": "Brief summary of the document",
-        "key_details": {{
-          "field_1": "Extracted Value",
-          "field_2": "Extracted Value",
-          "...": "..."
-        }}
+      
       }}
     }}
 
