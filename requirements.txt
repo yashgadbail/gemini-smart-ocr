@@ -8,7 +8,6 @@ configobj==5.0.9
 configparser==7.1.0
 etelemetry==0.3.1
 filelock==3.17.0
-fitz==0.0.1.dev2
 httplib2==0.22.0
 idna==3.10
 importlib_resources==6.5.2
@@ -39,3 +38,4 @@ traits==7.0.2
 typing_extensions==4.12.2
 tzdata==2025.1
 urllib3==2.3.0
+python-dotenv
