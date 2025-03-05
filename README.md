@@ -43,7 +43,10 @@ Smart OCR is a tool designed to extract data from PDF files and convert it direc
    Ensure your target PDF files are accessible to the application.
 
 2. **Run the Application**:
-   Execute `python extractor.py`
+   Execute
+   ```bash
+   python extractor.py
+   ```
 
    Execute the main application script:
 
